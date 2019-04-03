@@ -1,0 +1,16 @@
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+ }
+
+.card {
+    flex: 1 0 500px;
+    box-sizing: border-box;
+    margin: 1rem .25em;
+}
+
+.centered {
+    margin: 0 auto;
+    padding: 0 1em;
+}
