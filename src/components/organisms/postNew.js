@@ -10,6 +10,7 @@ import {
 } from 'megadraft';
 import { createPost, updatePost } from '../../actions';
 import Upload from '../molecules/upload';
+import { ToastContainer, toast } from 'react-toastify';
 
 class PostNew extends Component {
   constructor(props) {
@@ -49,8 +50,16 @@ class PostNew extends Component {
     values.post = editorStateToJSON(this.state.editorState);
     if (!this.props.post) {
       values.previewImage = this.file;
-      createPost(values);
-      history.push('/admin');
+      const data = createPost(values);
+      if (data.error) {
+        toast(data.error, {
+          autoClose: 5000,
+          pauseOnFocusLoss: true,
+          type: toast.TYPE.ERROR
+        });
+      } else {
+        history.push('/admin');
+      }
     } else {
       if (this.file) {
         values.previewImage = this.file;
@@ -119,6 +128,7 @@ class PostNew extends Component {
             Cancel
           </button>
         </form>
+        <ToastContainer autoClose={8000} />
       </div>
     );
   }

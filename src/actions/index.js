@@ -6,12 +6,10 @@ export const CREATE_POST = "create_post";
 export const UPDATE_POST = "update_post";
 export const DELETE_POST = "delete_post";
 
-// cons "httpsherokuapp.com/api";
-// const= "?key=tiagodws";
+    const URL = 'posts';
 
 export function fetchPosts() {
-    const url = `posts`;
-    let request = localStorage.getItem(url) ? JSON.parse(localStorage.getItem(url)) : [];
+    let request = localStorage.getItem(URL) ? JSON.parse(localStorage.getItem(URL)) : [];
 
     return {
         type: FETCH_POSTS,
@@ -20,8 +18,7 @@ export function fetchPosts() {
 }
 
 export function fetchPost(id) {
-    const url = `posts`;
-    const request = localStorage.getItem(url) ? JSON.parse(localStorage.getItem(url)) : [];
+    const request = localStorage.getItem(URL) ? JSON.parse(localStorage.getItem(URL)) : [];
     const post = request.filter(post => post.id === id);
 
     return {
@@ -31,11 +28,10 @@ export function fetchPost(id) {
 }
 
 export function updatePost(post) {
-    const url = `posts`;
-    const request = localStorage.getItem(url) ? JSON.parse(localStorage.getItem(url)) : [];
+    const request = localStorage.getItem(URL) ? JSON.parse(localStorage.getItem(URL)) : [];
     const list = request.filter(data => post.id !== data.id);
     list.push(post);
-    localStorage.setItem(url, JSON.stringify(list));
+    localStorage.setItem(URL, JSON.stringify(list));
 
     return {
         type: UPDATE_POST,
@@ -45,10 +41,19 @@ export function updatePost(post) {
 
 export function createPost(post) {
     post.id = uuid();
-    const url = `posts`;
-    const posts = localStorage.getItem(url) ? JSON.parse(localStorage.getItem(url)) : [];
+    const posts = localStorage.getItem(URL) ? JSON.parse(localStorage.getItem(URL)) : [];
     posts.push(post);
-    localStorage.setItem(url, JSON.stringify(posts));
+    try {
+        localStorage.setItem(URL, JSON.stringify(posts));
+    } catch (error) {
+        // the storage has a limit of 5mb
+        console.log('your storage exceeded the limit')
+        return {
+            type: CREATE_POST,
+            payload: post,
+            error: 'your storage exceeded the limit'
+        }
+    }
 
     return {
         type: CREATE_POST,
@@ -57,10 +62,9 @@ export function createPost(post) {
 }
 
 export function deletePost(id) {
-    const url = `posts`;
-    const posts = localStorage.getItem(url) ? JSON.parse(localStorage.getItem(url)) : [];
+    const posts = localStorage.getItem(URL) ? JSON.parse(localStorage.getItem(URL)) : [];
     const newList = posts.filter(post => post.id !== id);
-    localStorage.setItem(url, JSON.stringify(newList));
+    localStorage.setItem(URL, JSON.stringify(newList));
 
     return {
         type: DELETE_POST,

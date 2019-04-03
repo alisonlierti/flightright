@@ -22,7 +22,7 @@ export default function(state = {}, { type, payload }) {
     case DELETE_POST: {
       let posts = { ...state };
       posts.list = posts.list.filter(data => data.id !== payload);
-      return { posts };
+      return { ...posts };
     }
     default: {
       return state;

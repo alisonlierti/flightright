@@ -19,10 +19,10 @@ export default class PostPreview extends React.Component {
   render() {
     if (!this.props.post) return <Spinner />;
     return (
-      <div>
+      <div className="col-xl-3 com-lg-4 col-md-5 col-sm-6 col-xs-12">
         <div
-          className="card col-xl-4 com-lg-4 col-md-5 col-sm-6 col-xs-12"
-          style={{ height: '98%', marginTop: '15px' }}>
+          className="card"
+          style={{ height: '98%', width: '100%', marginTop: '15px' }}>
           <img
             className="card-img-top"
             style={{ height: '12rem' }}
