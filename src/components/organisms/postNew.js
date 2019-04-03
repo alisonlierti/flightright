@@ -8,7 +8,6 @@ import {
   Toolbar,
   editorStateToJSON
 } from 'megadraft';
-import { ToastContainer, toast } from 'react-toastify';
 import { createPost, updatePost } from '../../actions';
 import Upload from '../molecules/upload';
 
@@ -29,7 +28,7 @@ class PostNew extends Component {
     this.changeFile = this.changeFile.bind(this);
     this.onChange = this.onChange.bind(this);
     this.changeTitle = this.changeTitle.bind(this);
-    this.changeResume = this.changeResume.bind(this);
+    this.changeTextPreview = this.changeTextPreview.bind(this);
     this.onCancel = this.onCancel.bind(this);
   }
 
@@ -59,11 +58,6 @@ class PostNew extends Component {
       updatePost(values);
       this.props.closeEdit();
     }
-    toast('Sucess to save the post!', {
-      autoClose: 5000,
-      pauseOnFocusLoss: true,
-      type: toast.TYPE.SUCCESS
-    });
   }
 
   changeTitle(event, newValue) {
@@ -73,9 +67,9 @@ class PostNew extends Component {
     }
   }
 
-  changeResume(event, newValue) {
+  changeTextPreview(event, newValue) {
     if (this.props.post) {
-      this.props.post.resume = newValue;
+      this.props.post.previewText = newValue;
       this.props.onChangePost(this.props.post);
     }
   }
@@ -92,7 +86,7 @@ class PostNew extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <div style={{ marginLeft: '90px' }} className="col-10">
+      <div className="col-10 mx-auto">
         <h3 className="page-title">
           {this.props.post ? 'Edit Post' : 'New Post'}
         </h3>
@@ -104,9 +98,9 @@ class PostNew extends Component {
             component={this.renderField}
           />
           <Field
-            label="Resume"
-            name="resume"
-            onChange={this.changeResume}
+            label="Preview"
+            name="previewText"
+            onChange={this.changeTextPreview}
             component={this.renderField}
           />
           <Upload changeFile={this.changeFile} />
@@ -125,7 +119,6 @@ class PostNew extends Component {
             Cancel
           </button>
         </form>
-        <ToastContainer autoClose={8000} />
       </div>
     );
   }
@@ -152,7 +145,7 @@ function validate(values) {
   const errors = {};
 
   if (!values.title) errors.title = 'Title is required';
-  if (!values.resume) errors.resume = 'Resume is required';
+  if (!values.previewText) errors.previewText = 'Preview is required';
 
   return errors;
 }

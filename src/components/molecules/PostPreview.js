@@ -21,8 +21,8 @@ export default class PostPreview extends React.Component {
     return (
       <div>
         <div
-          className="card"
-          style={{ width: '17.8rem', height: '98%', marginTop: '15px' }}>
+          className="card col-xl-4 com-lg-4 col-md-5 col-sm-6 col-xs-12"
+          style={{ height: '98%', marginTop: '15px' }}>
           <img
             className="card-img-top"
             style={{ height: '12rem' }}
