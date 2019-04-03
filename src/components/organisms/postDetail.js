@@ -112,12 +112,11 @@ class PostDetail extends Component {
     return (
       <div className="col-11 mx-auto">
         <h3 className="page-title">{post.title}</h3>
-        <h6>Resumo: {post.resume}</h6>
+        <h6>Description: {post.description}</h6>
         <MegadraftEditor
           readOnly={true}
           editorState={this.state.editorState}
           onChange={this.onChange}
-          placeholder="Type here your text..."
           modalOptions={this.modalOptions}
           Toolbar={Toolbar}
         />

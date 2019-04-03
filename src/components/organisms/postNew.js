@@ -28,7 +28,7 @@ class PostNew extends Component {
     this.changeFile = this.changeFile.bind(this);
     this.onChange = this.onChange.bind(this);
     this.changeTitle = this.changeTitle.bind(this);
-    this.changeTextPreview = this.changeTextPreview.bind(this);
+    this.changeDescription = this.changeDescription.bind(this);
     this.onCancel = this.onCancel.bind(this);
   }
 
@@ -67,9 +67,9 @@ class PostNew extends Component {
     }
   }
 
-  changeTextPreview(event, newValue) {
+  changeDescription(event, newValue) {
     if (this.props.post) {
-      this.props.post.previewText = newValue;
+      this.props.post.description = newValue;
       this.props.onChangePost(this.props.post);
     }
   }
@@ -98,9 +98,9 @@ class PostNew extends Component {
             component={this.renderField}
           />
           <Field
-            label="Preview"
-            name="previewText"
-            onChange={this.changeTextPreview}
+            label="Description"
+            name="description"
+            onChange={this.changeDescription}
             component={this.renderField}
           />
           <Upload changeFile={this.changeFile} />
@@ -145,7 +145,7 @@ function validate(values) {
   const errors = {};
 
   if (!values.title) errors.title = 'Title is required';
-  if (!values.previewText) errors.previewText = 'Preview is required';
+  if (!values.description) errors.description = 'Description is required';
 
   return errors;
 }
